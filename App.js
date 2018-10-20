@@ -1,33 +1,24 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
+import HomeScreen from './components/HomeScreen'
+import GameScreen from './components/GameScreen'
+import ScheduleScreen from './components/ScheduleScreen'
 
-export default class App extends Component {
+export default class App extends React.Component {
+
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>showpup</Text>
-      </View>
-    );
+    return <RootStack />
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Game: GameScreen,
+    Schedule: ScheduleScreen,
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  {
+    initialRouteName: 'Home',
+  }
+);
