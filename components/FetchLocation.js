@@ -11,7 +11,7 @@ export default class FetchLocation extends Component {
       <View styles={styles.container}>
         <TouchableOpacity onPress={this.props.onGetLocation}>
           <View style={styles.button}>
-            <Text style={styles.buttonText}>Test Button</Text>
+            <Text style={styles.buttonText}>Check In!</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -26,24 +26,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
   button: {
     marginBottom: 30,
-    width: 260,
+    width: 100,
     alignItems: 'center',
     backgroundColor: '#2196F3'
   },
   buttonText: {
-    padding: 20,
+    padding: 15,
     color: 'white'
   }
 });

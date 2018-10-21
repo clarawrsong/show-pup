@@ -4,7 +4,6 @@ import {
   Text,
   View,
   TimePickerAndroid,
-  TouchableOpacity,
   Alert,
   PermissionsAndroid,
   AsyncStorage
@@ -33,31 +32,11 @@ const random = {
 
 export default class HomeScreen extends Component {
 
-  _onPressButton() {
-    Alert.alert('Hello!')
+  state = {
+    userLocation: null
   }
 
-  // async requestFineLocationPermission() {
-  //   try {
-  //     const granted = await PermissionsAndroid.request(
-  //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  //       {
-  //         'title': 'Cool Photo App Camera Permission',
-  //         'message': 'Cool Photo App needs access to your camera ' +
-  //           'so you can take awesome pictures.'
-  //       }
-  //     )
-  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  //       console.log("You can use the camera")
-  //     } else {
-  //       console.log("Camera permission denied")
-  //     }
-  //   } catch (err) {
-  //     console.warn(err)
-  //   }
-  // }
-
-  async getUserHandlerLocation() {
+  async requestLocationPermission() {
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -68,12 +47,9 @@ export default class HomeScreen extends Component {
         }
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("You can use fine location")
-        console.log(navigator.geolocation)
-        navigator.geolocation.getCurrentPosition(
-          position => { console.log(position) },
-          err => { console.log(err) });
-      } else {
+        console.log("Fine location permission granted")
+      }
+      else {
         console.log("Fine location permission denied")
       }
 
@@ -83,15 +59,25 @@ export default class HomeScreen extends Component {
 
   }
 
+  getUserHandlerLocation = () => {
+    this.requestLocationPermission(); // request location permission
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        console.log(position); // display position to console
+        this.setState({ // set state's location coordinates
+          userLocation: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          }
+        })
+      },
+      err => { console.log(err) });
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        {/* <Text style={styles.welcome}>Home Screen</Text>
-        <TouchableOpacity function={random.timePicker()}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>Test Button</Text>
-          </View>
-        </TouchableOpacity> */}
+        <Text style={styles.welcome}>Welcome to ShowPup!</Text>
         <FetchLocation onGetLocation={this.getUserHandlerLocation} />
       </View>
     );
@@ -101,28 +87,13 @@ export default class HomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  button: {
-    marginBottom: 30,
-    width: 260,
-    alignItems: 'center',
-    backgroundColor: '#2196F3'
-  },
-  buttonText: {
-    padding: 20,
-    color: 'white'
+    marginTop: 30,
+    marginBottom: 20
   }
 });
