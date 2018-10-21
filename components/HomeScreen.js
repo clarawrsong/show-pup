@@ -3,7 +3,8 @@ import { NativeModules, LayoutAnimation, Animated, StyleSheet, Text, View, TimeP
 import { createStackNavigator } from 'react-navigation';
 import renderer from 'react-test-renderer'; 
 
-import Bone from './Bone.js';
+import Bone from './Bone';
+import Bowl from './Bowl';
 
 export default class HomeScreen extends Component {
   _onPressButton() {
@@ -25,7 +26,7 @@ export default class HomeScreen extends Component {
           
         </TouchableOpacity>
         <Bone />
-        
+        <Bowl />
         <Text>hi</Text>
       </View>
     );
