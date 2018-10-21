@@ -107,10 +107,25 @@ export default class HomeScreen extends Component {
   }
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to ShowPup!</Text>
+
         <FetchLocation onGetLocation={this.getUserHandlerLocation} />
+
+        <TouchableOpacity onPress={() => navigate('Game', { name: 'GoGame' })}>
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>Go to Game</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={
+          () => navigate('Schedule', { name: 'GoSchedule' })}>
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>Go to Schedule</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -127,5 +142,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 30,
     marginBottom: 20
+  },
+  button: {
+    marginBottom: 30,
+    width: 120,
+    alignItems: 'center',
+    backgroundColor: '#2196F3'
+  },
+  buttonText: {
+    padding: 15,
+    color: 'white'
   }
 });
