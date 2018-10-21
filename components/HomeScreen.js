@@ -6,7 +6,9 @@ import {
   TimePickerAndroid,
   Alert,
   PermissionsAndroid,
-  AsyncStorage
+  TouchableOpacity,
+  AsyncStorage,
+  Platform
 } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
@@ -31,11 +33,17 @@ const random = {
 
 
 export default class HomeScreen extends Component {
+  constructor() {
+    super();
+    this.getUserHandlerLocation = this.getUserHandlerLocation.bind(this);
+  }
 
   state = {
     userLocation: null
   }
 
+  // ANDROID ONLY
+  // Requests ACCESS_FINE_LOCATION permission
   async requestLocationPermission() {
     try {
       const granted = await PermissionsAndroid.request(
@@ -52,15 +60,18 @@ export default class HomeScreen extends Component {
       else {
         console.log("Fine location permission denied")
       }
-
-    } catch (err) {
+    }
+    catch (err) {
       console.warn(err)
     }
-
   }
 
-  getUserHandlerLocation = () => {
-    this.requestLocationPermission(); // request location permission
+  // Gets user's location coordinates
+  async getUserHandlerLocation() {
+    // request location permission for android
+    if (Platform.OS === 'android') this.requestLocationPermission();
+
+    // set location
     navigator.geolocation.getCurrentPosition(
       position => {
         console.log(position); // display position to console
@@ -69,9 +80,30 @@ export default class HomeScreen extends Component {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
           }
-        })
+        });
+        console.log(this.state.userLocation)
       },
       err => { console.log(err) });
+
+    // TODO : fix alerts so that they're successful from the start
+    if (this.state.userLocation !== null)
+      Alert.alert(
+        'Success!',
+        'Check-in Successful!',
+        [
+          { text: 'OK' }
+        ],
+        { cancelable: false }
+      );
+    else
+      Alert.alert(
+        'Failed.',
+        'Check-in Unsuccessful.',
+        [
+          { text: 'OK' }
+        ],
+        { cancelable: false }
+      )
   }
 
   render() {
