@@ -32,33 +32,30 @@ const random = {
 
 
 export default class HomeScreen extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   _onPressButton() {
     Alert.alert('Hello!')
   }
 
-  async requestFineLocationPermission() {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          'title': 'Cool Photo App Camera Permission',
-          'message': 'Cool Photo App needs access to your camera ' +
-            'so you can take awesome pictures.'
-        }
-      )
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("You can use the camera")
-      } else {
-        console.log("Camera permission denied")
-      }
-    } catch (err) {
-      console.warn(err)
-    }
-  }
+  // async requestFineLocationPermission() {
+  //   try {
+  //     const granted = await PermissionsAndroid.request(
+  //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  //       {
+  //         'title': 'Cool Photo App Camera Permission',
+  //         'message': 'Cool Photo App needs access to your camera ' +
+  //           'so you can take awesome pictures.'
+  //       }
+  //     )
+  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //       console.log("You can use the camera")
+  //     } else {
+  //       console.log("Camera permission denied")
+  //     }
+  //   } catch (err) {
+  //     console.warn(err)
+  //   }
+  // }
 
   async getUserHandlerLocation() {
     try {
@@ -72,9 +69,10 @@ export default class HomeScreen extends Component {
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         console.log("You can use fine location")
+        console.log(navigator.geolocation)
         navigator.geolocation.getCurrentPosition(
           position => { console.log(position) },
-          err => console.log('Error'));
+          err => { console.log(err) });
       } else {
         console.log("Fine location permission denied")
       }

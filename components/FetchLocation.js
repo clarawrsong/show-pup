@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet, Button, TouchableOpacity, View, Text } from 'react-native';
 
 export default class FetchLocation extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     return (
